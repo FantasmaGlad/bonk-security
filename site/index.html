@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bonk Security</title>
+<meta name="description" content="How to report a vulnerability in Bonk.">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" hreflang="fr" href="https://security.bonk-os.app/fr/">
+</head>
+<body>
+<p><a href="/fr/" lang="fr">Français</a></p>
+<h1>Bonk Security</h1>
+<p>Bonk writes to entire disks: a flaw can destroy data. Please report vulnerabilities privately, never in a public issue.</p>
+<h2>Report</h2>
+<ul>
+<li><a href="https://github.com/FantasmaGlad/Bonk/security/advisories/new">GitHub private report</a>: only the maintainer can see it.</li>
+<li><a href="mailto:security@bonk-os.app">security@bonk-os.app</a>: encrypt any exploitable detail with the key below.</li>
+</ul>
+<h2>OpenPGP key</h2>
+<table>
+<tr><th>Identity</th><td>Bonk Security &lt;security@bonk-os.app&gt;</td></tr>
+<tr><th>Fingerprint</th><td><code>A782 AC57 321A 862C 2ED8 F0FB 34F1 5332 E2A0 7A30</code></td></tr>
+<tr><th>Expires</th><td>2028-10-30</td></tr>
+</table>
+<p><code>gpg --locate-keys security@bonk-os.app</code></p>
+<p>Or download <a href="/security.asc">the key</a>. Compare the fingerprint.</p>
+<h2>What to expect</h2>
+<p>Acknowledgment within 7 days, first assessment within 30 days, coordinated disclosure with the fix, at most 90 days after the report unless agreed otherwise. These are objectives, not contractual commitments: the project has a single maintainer.</p>
+<h2>Policy</h2>
+<p><a href="https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.md">Full policy</a></p>
+</body>
+</html>
