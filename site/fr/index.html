@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sécurité de Bonk</title>
+<meta name="description" content="Comment signaler une vulnérabilité de Bonk.">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" hreflang="en" href="https://security.bonk-os.app/">
+</head>
+<body>
+<p><a href="/" lang="en">English</a></p>
+<h1>Sécurité de Bonk</h1>
+<p>Bonk écrit sur des disques entiers : une faille peut détruire des données. Signalez les vulnérabilités en privé, jamais dans une issue publique.</p>
+<h2>Signaler</h2>
+<ul>
+<li><a href="https://github.com/FantasmaGlad/Bonk/security/advisories/new">Signalement privé GitHub</a> : seul le mainteneur le voit.</li>
+<li><a href="mailto:security@bonk-os.app">security@bonk-os.app</a> : chiffrez tout détail exploitable avec la clé ci-dessous.</li>
+</ul>
+<h2>Clé OpenPGP</h2>
+<table>
+<tr><th>Identité</th><td>Bonk Security &lt;security@bonk-os.app&gt;</td></tr>
+<tr><th>Empreinte</th><td><code>A782 AC57 321A 862C 2ED8 F0FB 34F1 5332 E2A0 7A30</code></td></tr>
+<tr><th>Expiration</th><td>2028-10-30</td></tr>
+</table>
+<p>Récupérez la clé par au moins deux canaux et comparez l'empreinte :</p>
+<ul>
+<li><a href="/security.asc">ce site</a></li>
+<li><a href="https://bonk-os.app/.well-known/security.asc">le site principal</a></li>
+<li><a href="https://github.com/FantasmaGlad/Bonk/blob/main/docs/security/bonk-security-public-key.asc">le dépôt de Bonk</a></li>
+<li>DNS : <code>TXT openpgp4fpr</code> sur <code>bonk-os.app</code>, et un enregistrement <code>OPENPGPKEY</code></li>
+<li>Web Key Directory : <code>gpg --locate-keys security@bonk-os.app</code></li>
+</ul>
+<h2>Ce que vous pouvez attendre</h2>
+<p>Accusé de réception sous 7 jours, première évaluation sous 30 jours, divulgation coordonnée avec le correctif, au plus tard 90 jours après le signalement sauf accord contraire. Ce sont des objectifs, pas des engagements contractuels : le projet n'a qu'un mainteneur.</p>
+<h2>Politique</h2>
+<p>Périmètre, recherche de bonne foi et historique des clés : <a href="https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.fr.md">politique complète</a>. Lisible par machine : <a href="/.well-known/security.txt">security.txt</a>.</p>
+</body>
+</html>
