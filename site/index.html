@@ -23,17 +23,11 @@
 <tr><th>Fingerprint</th><td><code>A782 AC57 321A 862C 2ED8 F0FB 34F1 5332 E2A0 7A30</code></td></tr>
 <tr><th>Expires</th><td>2028-10-30</td></tr>
 </table>
-<p>Retrieve the key from at least two channels and compare the fingerprint:</p>
-<ul>
-<li><a href="/security.asc">this site</a></li>
-<li><a href="https://bonk-os.app/.well-known/security.asc">the main website</a></li>
-<li><a href="https://github.com/FantasmaGlad/Bonk/blob/main/docs/security/bonk-security-public-key.asc">the Bonk repository</a></li>
-<li>DNS: <code>TXT openpgp4fpr</code> on <code>bonk-os.app</code>, and an <code>OPENPGPKEY</code> record</li>
-<li>Web Key Directory: <code>gpg --locate-keys security@bonk-os.app</code></li>
-</ul>
+<p><code>gpg --locate-keys security@bonk-os.app</code></p>
+<p>Or download <a href="/security.asc">the key</a>. Compare the fingerprint.</p>
 <h2>What to expect</h2>
 <p>Acknowledgment within 7 days, first assessment within 30 days, coordinated disclosure with the fix, at most 90 days after the report unless agreed otherwise. These are objectives, not contractual commitments: the project has a single maintainer.</p>
 <h2>Policy</h2>
-<p>Scope, good-faith research and history of keys: <a href="https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.md">full policy</a>. Machine-readable: <a href="/.well-known/security.txt">security.txt</a>.</p>
+<p><a href="https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.md">Full policy</a></p>
 </body>
 </html>
