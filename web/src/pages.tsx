@@ -23,6 +23,8 @@ type Text = {
   delays: string;
   policy: string;
   policyLink: string;
+  menu: [string, string][];
+  source: string;
 };
 
 const EN: Text = {
@@ -53,6 +55,12 @@ const EN: Text = {
     "Acknowledgment within 7 days, first assessment within 30 days, coordinated disclosure with the fix, at most 90 days after the report unless agreed otherwise. These are objectives, not contractual commitments.",
   policy: "Policy",
   policyLink: "Full policy",
+  menu: [
+    ["https://bonk-os.app/images/", "Systems"],
+    ["https://bonk-os.app/install/", "Get Bonk"],
+    ["https://bonk-os.app/docs/", "Commands"],
+  ],
+  source: "Source code",
 };
 
 const FR: Text = {
@@ -83,6 +91,12 @@ const FR: Text = {
     "Accusé de réception sous 7 jours, première évaluation sous 30 jours, divulgation coordonnée avec le correctif, au plus tard 90 jours après le signalement sauf accord contraire. Ce sont des objectifs, pas des engagements contractuels.",
   policy: "Politique",
   policyLink: "Politique complète",
+  menu: [
+    ["https://bonk-os.app/images/?lang=fr", "Systèmes"],
+    ["https://bonk-os.app/install/?lang=fr", "Obtenir Bonk"],
+    ["https://bonk-os.app/docs/?lang=fr", "Commandes"],
+  ],
+  source: "Code source",
 };
 
 function Page({ text }: { text: Text }) {
@@ -93,7 +107,9 @@ function Page({ text }: { text: Text }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{text.title}</title>
         <meta name="description" content={text.description} />
+        <meta name="theme-color" content="#faf7f2" />
         <link rel="stylesheet" href="/style.css" />
+        <link rel="icon" href="/logo.png" />
         <link
           rel="alternate"
           hrefLang={text.other.lang}
@@ -101,50 +117,80 @@ function Page({ text }: { text: Text }) {
         />
       </head>
       <body>
-        <p>
-          <a href={text.other.href} lang={text.other.lang}>
-            {text.other.label}
-          </a>
-        </p>
-        <h1>{text.title}</h1>
-        <p>{text.intro}</p>
-        <h2>{text.report}</h2>
-        <ul>
-          <li>{text.github}</li>
-          <li>
-            <a href={`mailto:${MAIL}`}>{MAIL}</a>
-            {text.mail}
-          </li>
-        </ul>
-        <h2>{text.key}</h2>
-        <table>
-          <tbody>
-            <tr>
-              <th>{text.identity}</th>
-              <td>{`Bonk Security <${MAIL}>`}</td>
-            </tr>
-            <tr>
-              <th>{text.fingerprint}</th>
-              <td>
-                <code>{FINGERPRINT}</code>
-              </td>
-            </tr>
-            <tr>
-              <th>{text.expires}</th>
-              <td>2028-10-30</td>
-            </tr>
-          </tbody>
-        </table>
-        <p>
-          <code>gpg --locate-keys {MAIL}</code>
-        </p>
-        <p>{text.download}</p>
-        <h2>{text.expect}</h2>
-        <p>{text.delays}</p>
-        <h2>{text.policy}</h2>
-        <p>
-          <a href={POLICY}>{text.policyLink}</a>
-        </p>
+        <header className="site-header">
+          <div className="bar">
+            <a
+              className="brand"
+              href={text.lang === "fr" ? "https://bonk-os.app/?lang=fr" : "https://bonk-os.app/"}
+            >
+              <img src="/logo.png" alt="" width="36" height="36" />
+              <span>Bonk</span>
+            </a>
+            <nav className="menu" aria-label="Bonk">
+              {text.menu.map(([href, label]) => (
+                <a key={href} href={href}>
+                  {label}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </header>
+        <main>
+          <h1>{text.title}</h1>
+          <p className="lead">{text.intro}</p>
+          <h2>{text.report}</h2>
+          <div className="card">
+            <ul>
+              <li>{text.github}</li>
+              <li>
+                <a href={`mailto:${MAIL}`}>{MAIL}</a>
+                {text.mail}
+              </li>
+            </ul>
+          </div>
+          <h2>{text.key}</h2>
+          <div className="card">
+            <table>
+              <tbody>
+                <tr>
+                  <th>{text.identity}</th>
+                  <td>{`Bonk Security <${MAIL}>`}</td>
+                </tr>
+                <tr>
+                  <th>{text.fingerprint}</th>
+                  <td>
+                    <code>{FINGERPRINT}</code>
+                  </td>
+                </tr>
+                <tr>
+                  <th>{text.expires}</th>
+                  <td>2028-10-30</td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="command">
+              <code>gpg --locate-keys {MAIL}</code>
+            </p>
+            <p>{text.download}</p>
+          </div>
+          <h2>{text.expect}</h2>
+          <p>{text.delays}</p>
+          <h2>{text.policy}</h2>
+          <p>
+            <a href={POLICY}>{text.policyLink}</a>
+          </p>
+        </main>
+        <footer className="site-footer">
+          <div className="bar">
+            <p>
+              <a href="https://github.com/FantasmaGlad/bonk-security">{text.source}</a>
+              {/* A static page cannot read the browser's language: the other one stays one link away. */}
+              <a href={text.other.href} lang={text.other.lang} hrefLang={text.other.lang}>
+                {text.other.label}
+              </a>
+            </p>
+          </div>
+        </footer>
       </body>
     </html>
   );
