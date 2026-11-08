@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+const SITE = "https://security.bonk-os.app";
 const FINGERPRINT = "A782 AC57 321A 862C 2ED8 F0FB 34F1 5332 E2A0 7A30";
 const ADVISORY = "https://github.com/FantasmaGlad/Bonk/security/advisories/new";
 const POLICY = "https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.md";
@@ -7,99 +8,79 @@ const MAIL = "security@bonk-os.app";
 
 type Text = {
   lang: "en" | "fr";
+  path: string;
   title: string;
   description: string;
-  other: { href: string; lang: string; label: string };
-  intro: string;
-  report: string;
-  github: ReactNode;
-  mail: string;
+  lead: string;
   key: string;
-  identity: string;
-  fingerprint: string;
-  expires: string;
-  download: ReactNode;
-  expect: string;
-  delays: string;
+  labels: [string, string, string, string, string];
+  report: string;
+  steps: [string, string, ReactNode];
+  file: string;
   policy: string;
-  policyLink: string;
-  menu: [string, string][];
-  source: string;
+  history: string;
+  events: [string, string][];
+  other: { href: string; lang: string; label: string };
 };
 
 const EN: Text = {
   lang: "en",
-  title: "Bonk Security",
-  description: "How to report a vulnerability in Bonk.",
-  other: { href: "/fr/", lang: "fr", label: "Français" },
-  intro:
-    "Bonk writes to entire disks: a flaw can destroy data. Please report vulnerabilities privately, never in a public issue.",
+  path: "/",
+  title: "Bonk security",
+  description:
+    "Report a Bonk vulnerability privately: OpenPGP key, fingerprint and signed security.txt.",
+  lead: "Report vulnerabilities in Bonk, its website or its signed package repositories privately. Encrypt the report with the key below.",
+  key: "Key",
+  labels: ["Identity", "Fingerprint", "Algorithms", "Expires", "Files"],
   report: "Report",
-  github: (
+  steps: [
+    "1. Fetch the key and check its fingerprint against the one above:",
+    "2. Encrypt the report. Attach your own public key to get an encrypted reply:",
     <>
-      <a href={ADVISORY}>GitHub private report</a>: only the maintainer can see it.
-    </>
-  ),
-  mail: ": encrypt any exploitable detail with the key below.",
-  key: "OpenPGP key",
-  identity: "Identity",
-  fingerprint: "Fingerprint",
-  expires: "Expires",
-  download: (
-    <>
-      Or download <a href="/security.asc">the key</a>. Compare the fingerprint.
-    </>
-  ),
-  expect: "What to expect",
-  delays:
-    "Acknowledgment within 7 days, first assessment within 30 days, coordinated disclosure with the fix, at most 90 days after the report unless agreed otherwise. These are objectives, not contractual commitments.",
-  policy: "Policy",
-  policyLink: "Full policy",
-  menu: [
-    ["https://bonk-os.app/images/", "Systems"],
-    ["https://bonk-os.app/install/", "Get Bonk"],
-    ["https://bonk-os.app/docs/", "Commands"],
+      3. Send the encrypted file to <a href={`mailto:${MAIL}`}>{MAIL}</a>, or open a{" "}
+      <a href={ADVISORY}>private GitHub report</a>.
+    </>,
   ],
-  source: "Source code",
+  file: "report.txt",
+  policy: "Full policy:",
+  history: "History",
+  events: [
+    ["2026-11-01", "This site published."],
+    ["2026-10-31", "Current key put into service."],
+  ],
+  other: { href: "/fr/", lang: "fr", label: "Français" },
 };
 
 const FR: Text = {
   lang: "fr",
+  path: "/fr/",
   title: "Sécurité de Bonk",
-  description: "Comment signaler une vulnérabilité dans Bonk.",
-  other: { href: "/", lang: "en", label: "English" },
-  intro:
-    "Bonk écrit sur des disques entiers : une faille peut détruire des données. Signalez les vulnérabilités en privé, jamais dans une issue publique.",
+  description:
+    "Signaler en privé une faille de Bonk : clé OpenPGP, empreinte et security.txt signé.",
+  lead: "Signalez en privé les failles de Bonk, de son site ou de ses dépôts de paquets signés. Chiffrez le rapport avec la clé ci-dessous.",
+  key: "Clé",
+  labels: ["Identité", "Empreinte", "Algorithmes", "Expiration", "Fichiers"],
   report: "Signaler",
-  github: (
+  steps: [
+    "1. Récupérez la clé et comparez son empreinte avec celle ci-dessus :",
+    "2. Chiffrez le rapport. Joignez votre propre clé publique pour recevoir une réponse chiffrée :",
     <>
-      <a href={ADVISORY}>Signalement privé GitHub</a> : seul le mainteneur le voit.
-    </>
-  ),
-  mail: " : chiffrez tout détail exploitable avec la clé ci-dessous.",
-  key: "Clé OpenPGP",
-  identity: "Identité",
-  fingerprint: "Empreinte",
-  expires: "Expiration",
-  download: (
-    <>
-      Ou téléchargez <a href="/security.asc">la clé</a>. Comparez l'empreinte.
-    </>
-  ),
-  expect: "Ce que vous pouvez attendre",
-  delays:
-    "Accusé de réception sous 7 jours, première évaluation sous 30 jours, divulgation coordonnée avec le correctif, au plus tard 90 jours après le signalement sauf accord contraire. Ce sont des objectifs, pas des engagements contractuels.",
-  policy: "Politique",
-  policyLink: "Politique complète",
-  menu: [
-    ["https://bonk-os.app/images/?lang=fr", "Systèmes"],
-    ["https://bonk-os.app/install/?lang=fr", "Obtenir Bonk"],
-    ["https://bonk-os.app/docs/?lang=fr", "Commandes"],
+      3. Envoyez le fichier chiffré à <a href={`mailto:${MAIL}`}>{MAIL}</a>, ou ouvrez un{" "}
+      <a href={ADVISORY}>signalement privé sur GitHub</a>.
+    </>,
   ],
-  source: "Code source",
+  file: "rapport.txt",
+  policy: "Politique complète :",
+  history: "Historique",
+  events: [
+    ["2026-11-01", "Publication de ce site."],
+    ["2026-10-31", "Mise en service de la clé actuelle."],
+  ],
+  other: { href: "/", lang: "en", label: "English" },
 };
 
 function Page({ text }: { text: Text }) {
+  const [identity, fingerprint, algorithms, expires, files] = text.labels;
   return (
     <html lang={text.lang}>
       <head>
@@ -107,89 +88,72 @@ function Page({ text }: { text: Text }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{text.title}</title>
         <meta name="description" content={text.description} />
-        <meta name="theme-color" content="#faf7f2" />
-        <link rel="stylesheet" href="/style.css" />
+        <link rel="canonical" href={`${SITE}${text.path}`} />
+        <link rel="alternate" hrefLang="en" href={`${SITE}/`} />
+        <link rel="alternate" hrefLang="fr" href={`${SITE}/fr/`} />
         <link rel="icon" href="/logo.png" />
-        <link
-          rel="alternate"
-          hrefLang={text.other.lang}
-          href={`https://security.bonk-os.app${text.other.href}`}
-        />
+        <link rel="stylesheet" href="/site.css" />
+        <script src="/copy.js" defer />
       </head>
       <body>
-        <header className="site-header">
-          <div className="bar">
-            <a
-              className="brand"
-              href={text.lang === "fr" ? "https://bonk-os.app/?lang=fr" : "https://bonk-os.app/"}
-            >
-              <img src="/logo.png" alt="" width="36" height="36" />
-              <span>Bonk</span>
-            </a>
-            <nav className="menu" aria-label="Bonk">
-              {text.menu.map(([href, label]) => (
-                <a key={href} href={href}>
-                  {label}
-                </a>
-              ))}
-            </nav>
-          </div>
-        </header>
         <main>
-          <h1>{text.title}</h1>
-          <p className="lead">{text.intro}</p>
-          <h2>{text.report}</h2>
-          <div className="card">
-            <ul>
-              <li>{text.github}</li>
-              <li>
-                <a href={`mailto:${MAIL}`}>{MAIL}</a>
-                {text.mail}
-              </li>
-            </ul>
-          </div>
-          <h2>{text.key}</h2>
-          <div className="card">
-            <table>
-              <tbody>
-                <tr>
-                  <th>{text.identity}</th>
-                  <td>{`Bonk Security <${MAIL}>`}</td>
-                </tr>
-                <tr>
-                  <th>{text.fingerprint}</th>
-                  <td>
-                    <code>{FINGERPRINT}</code>
-                  </td>
-                </tr>
-                <tr>
-                  <th>{text.expires}</th>
-                  <td>2028-10-30</td>
-                </tr>
-              </tbody>
-            </table>
-            <p className="command">
-              <code>gpg --locate-keys {MAIL}</code>
-            </p>
-            <p>{text.download}</p>
-          </div>
-          <h2>{text.expect}</h2>
-          <p>{text.delays}</p>
-          <h2>{text.policy}</h2>
-          <p>
-            <a href={POLICY}>{text.policyLink}</a>
-          </p>
-        </main>
-        <footer className="site-footer">
-          <div className="bar">
+          <header>
+            <h1>{text.title}</h1>
+            <p className="lead">{text.lead}</p>
+          </header>
+          <section>
+            <h2>{text.key}</h2>
+            <dl>
+              <dt>{identity}</dt>
+              <dd>{`Bonk Security <${MAIL}>`}</dd>
+              <dt>{fingerprint}</dt>
+              <dd>
+                <code>{FINGERPRINT}</code>
+              </dd>
+              <dt>{algorithms}</dt>
+              <dd>Ed25519, Curve25519</dd>
+              <dt>{expires}</dt>
+              <dd>2028-10-30</dd>
+              <dt>{files}</dt>
+              <dd>
+                <a href="/security.asc">security.asc</a> ·{" "}
+                <a href="/.well-known/security.txt">security.txt</a>
+              </dd>
+            </dl>
+          </section>
+          <section>
+            <h2>{text.report}</h2>
+            <p>{text.steps[0]}</p>
+            <pre>
+              <code>{`gpg --locate-keys ${MAIL}\ngpg --fingerprint ${MAIL}`}</code>
+            </pre>
+            <p>{text.steps[1]}</p>
+            <pre>
+              <code>{`gpg --armor --encrypt --recipient ${MAIL} ${text.file}`}</code>
+            </pre>
+            <p>{text.steps[2]}</p>
             <p>
-              <a href="https://github.com/FantasmaGlad/bonk-security">{text.source}</a>
-              {/* A static page cannot read the browser's language: the other one stays one link away. */}
-              <a href={text.other.href} lang={text.other.lang} hrefLang={text.other.lang}>
-                {text.other.label}
-              </a>
+              {text.policy} <a href={POLICY}>SECURITY.md</a>.
             </p>
-          </div>
+          </section>
+          <section>
+            <h2>{text.history}</h2>
+            <ul>
+              {text.events.map(([date, event]) => (
+                <li key={date}>{`${date}${text.lang === "fr" ? " : " : ": "}${event}`}</li>
+              ))}
+            </ul>
+          </section>
+        </main>
+        <footer>
+          <p>
+            <a href="https://bonk-os.app">bonk-os.app</a> ·{" "}
+            <a href="https://packages.bonk-os.app">packages</a> ·{" "}
+            <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a> ·{" "}
+            <a href={text.other.href} lang={text.other.lang} hrefLang={text.other.lang}>
+              {text.other.label}
+            </a>
+          </p>
         </footer>
       </body>
     </html>
