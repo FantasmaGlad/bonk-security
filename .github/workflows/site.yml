@@ -1,4 +1,3 @@
-# Vérifie la signature de security.txt à chaque PR et publie site/ sur GitHub Pages depuis main. Aucun secret.
 name: site
 
 on:
