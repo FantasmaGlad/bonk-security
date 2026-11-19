@@ -1,10 +1,13 @@
+import { readFileSync } from "node:fs";
 import type { ReactNode } from "react";
+import { readKey } from "./key";
 
 const SITE = "https://security.bonk-os.app";
-const FINGERPRINT = "A782 AC57 321A 862C 2ED8 F0FB 34F1 5332 E2A0 7A30";
 const ADVISORY = "https://github.com/FantasmaGlad/Bonk/security/advisories/new";
 const POLICY = "https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.md";
 const MAIL = "security@bonk-os.app";
+// Read at build time: the page shows what the published key says.
+const KEY = readKey(readFileSync("public/security.asc", "utf8"));
 
 type Text = {
   lang: "en" | "fr";
@@ -103,15 +106,15 @@ function KeySection({ text }: { text: Text }) {
       <h2>{text.key}</h2>
       <dl>
         <dt>{identity}</dt>
-        <dd>{`Bonk Security <${MAIL}>`}</dd>
+        <dd>{KEY.identity}</dd>
         <dt>{fingerprint}</dt>
         <dd>
-          <code>{FINGERPRINT}</code>
+          <code>{KEY.fingerprint}</code>
         </dd>
         <dt>{algorithms}</dt>
-        <dd>Ed25519, Curve25519</dd>
+        <dd>{KEY.algorithms.join(", ")}</dd>
         <dt>{expires}</dt>
-        <dd>2028-10-30</dd>
+        <dd>{KEY.expires}</dd>
         <dt>{files}</dt>
         <dd>
           <a href="/security.asc">security.asc</a> ·{" "}
