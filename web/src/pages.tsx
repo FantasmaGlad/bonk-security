@@ -79,82 +79,112 @@ const FR: Text = {
   other: { href: "/", lang: "en", label: "English" },
 };
 
-function Page({ text }: { text: Text }) {
+function Head({ text }: { text: Text }) {
+  return (
+    <head>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>{text.title}</title>
+      <meta name="description" content={text.description} />
+      <link rel="canonical" href={`${SITE}${text.path}`} />
+      <link rel="alternate" hrefLang="en" href={`${SITE}/`} />
+      <link rel="alternate" hrefLang="fr" href={`${SITE}/fr/`} />
+      <link rel="icon" href="/logo.png" />
+      <link rel="stylesheet" href="/site.css" />
+      <script src="/copy.js" defer />
+    </head>
+  );
+}
+
+function KeySection({ text }: { text: Text }) {
   const [identity, fingerprint, algorithms, expires, files] = text.labels;
   return (
+    <section>
+      <h2>{text.key}</h2>
+      <dl>
+        <dt>{identity}</dt>
+        <dd>{`Bonk Security <${MAIL}>`}</dd>
+        <dt>{fingerprint}</dt>
+        <dd>
+          <code>{FINGERPRINT}</code>
+        </dd>
+        <dt>{algorithms}</dt>
+        <dd>Ed25519, Curve25519</dd>
+        <dt>{expires}</dt>
+        <dd>2028-10-30</dd>
+        <dt>{files}</dt>
+        <dd>
+          <a href="/security.asc">security.asc</a> ·{" "}
+          <a href="/.well-known/security.txt">security.txt</a>
+        </dd>
+      </dl>
+    </section>
+  );
+}
+
+function ReportSection({ text }: { text: Text }) {
+  return (
+    <section>
+      <h2>{text.report}</h2>
+      <p>{text.steps[0]}</p>
+      <pre>
+        <code>{`gpg --locate-keys ${MAIL}\ngpg --fingerprint ${MAIL}`}</code>
+      </pre>
+      <p>{text.steps[1]}</p>
+      <pre>
+        <code>{`gpg --armor --encrypt --recipient ${MAIL} ${text.file}`}</code>
+      </pre>
+      <p>{text.steps[2]}</p>
+      <p>
+        {text.policy} <a href={POLICY}>SECURITY.md</a>.
+      </p>
+    </section>
+  );
+}
+
+function HistorySection({ text }: { text: Text }) {
+  return (
+    <section>
+      <h2>{text.history}</h2>
+      <ul>
+        {text.events.map(([date, event]) => (
+          <li key={date}>{`${date}${text.lang === "fr" ? " : " : ": "}${event}`}</li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function Footer({ text }: { text: Text }) {
+  return (
+    <footer>
+      <p>
+        <a href="https://bonk-os.app">bonk-os.app</a> ·{" "}
+        <a href="https://packages.bonk-os.app">packages</a> ·{" "}
+        <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a> ·{" "}
+        <a href={text.other.href} lang={text.other.lang} hrefLang={text.other.lang}>
+          {text.other.label}
+        </a>
+      </p>
+    </footer>
+  );
+}
+
+function Page({ text }: { text: Text }) {
+  return (
     <html lang={text.lang}>
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{text.title}</title>
-        <meta name="description" content={text.description} />
-        <link rel="canonical" href={`${SITE}${text.path}`} />
-        <link rel="alternate" hrefLang="en" href={`${SITE}/`} />
-        <link rel="alternate" hrefLang="fr" href={`${SITE}/fr/`} />
-        <link rel="icon" href="/logo.png" />
-        <link rel="stylesheet" href="/site.css" />
-        <script src="/copy.js" defer />
-      </head>
+      <Head text={text} />
       <body>
         <main>
           <header>
             <h1>{text.title}</h1>
             <p className="lead">{text.lead}</p>
           </header>
-          <section>
-            <h2>{text.key}</h2>
-            <dl>
-              <dt>{identity}</dt>
-              <dd>{`Bonk Security <${MAIL}>`}</dd>
-              <dt>{fingerprint}</dt>
-              <dd>
-                <code>{FINGERPRINT}</code>
-              </dd>
-              <dt>{algorithms}</dt>
-              <dd>Ed25519, Curve25519</dd>
-              <dt>{expires}</dt>
-              <dd>2028-10-30</dd>
-              <dt>{files}</dt>
-              <dd>
-                <a href="/security.asc">security.asc</a> ·{" "}
-                <a href="/.well-known/security.txt">security.txt</a>
-              </dd>
-            </dl>
-          </section>
-          <section>
-            <h2>{text.report}</h2>
-            <p>{text.steps[0]}</p>
-            <pre>
-              <code>{`gpg --locate-keys ${MAIL}\ngpg --fingerprint ${MAIL}`}</code>
-            </pre>
-            <p>{text.steps[1]}</p>
-            <pre>
-              <code>{`gpg --armor --encrypt --recipient ${MAIL} ${text.file}`}</code>
-            </pre>
-            <p>{text.steps[2]}</p>
-            <p>
-              {text.policy} <a href={POLICY}>SECURITY.md</a>.
-            </p>
-          </section>
-          <section>
-            <h2>{text.history}</h2>
-            <ul>
-              {text.events.map(([date, event]) => (
-                <li key={date}>{`${date}${text.lang === "fr" ? " : " : ": "}${event}`}</li>
-              ))}
-            </ul>
-          </section>
+          <KeySection text={text} />
+          <ReportSection text={text} />
+          <HistorySection text={text} />
         </main>
-        <footer>
-          <p>
-            <a href="https://bonk-os.app">bonk-os.app</a> ·{" "}
-            <a href="https://packages.bonk-os.app">packages</a> ·{" "}
-            <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a> ·{" "}
-            <a href={text.other.href} lang={text.other.lang} hrefLang={text.other.lang}>
-              {text.other.label}
-            </a>
-          </p>
-        </footer>
+        <Footer text={text} />
       </body>
     </html>
   );
